@@ -21,25 +21,40 @@ const LoginPopup = ({setShowLogin}) => {
         setData(data=>({...data,[name]:value}))
     }
 
-   const onLogin = async (event) =>{
-        event.preventDefault()
-        let newUrl = url;
-        if(currentState==='Login'){
-            newUrl+= "/api/user/login"
-        }else{
-            newUrl += "/api/user/register"
-        }
+   const onLogin = async (event) => {
+    event.preventDefault();
 
-        const response = await axios.post(newUrl,data);
+    let newUrl = url;
+    if (currentState === 'Login') {
+        newUrl += "/api/user/login";
+    } else {
+        newUrl += "/api/user/register";
+    }
 
-        if(response.data.success){
+    try {
+        const response = await axios.post(newUrl, data);
+
+        if (response.data.success) {
             setToken(response.data.token);
-            localStorage.setItem("token", response.data.token)
+            localStorage.setItem("token", response.data.token);
             setShowLogin(false);
-        }else{
+        } else {
             alert(response.data.message);
         }
-   }
+
+    } catch (error) {
+        if (error.response) {
+            // Server responded with status (like 401)
+            alert(error.response.data.message || "Authentication failed");
+        } else if (error.request) {
+            // No response from server
+            alert("No response from server. Please try again.");
+        } else {
+            // Other error
+            alert("Something went wrong.");
+        }
+    }
+};
 
   return (
     <div className='login-popup'>
