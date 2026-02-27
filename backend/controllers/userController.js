@@ -2,6 +2,7 @@ const userModel = require("../models/userModel.js");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const validator = require("validator");
+const HTTP_STATUS = require("../constants/httpStatus");
 
 // login user
 const loginUser = async (req, res) => {
@@ -16,7 +17,7 @@ const loginUser = async (req, res) => {
     const isMatch = await bcrypt.compare(password, user.password);
 
     if (!isMatch) {
-      return res.json({ success: false, message: "Invalid credentials" });
+      return res.status(HTTP_STATUS.UNAUTHORIZED).json({ success: false, message: "Invalid credentials" });
     }
 
     const token = createToken(user._id);
@@ -38,7 +39,7 @@ const registerUser = async (req, res) => {
     // checking if user already exists
     const exists = await userModel.findOne({ email });
     if (exists) {
-      return res.json({ success: false, message: "User already exists" });
+      return res.status(HTTP_STATUS.UNAUTHORIZED).json({ success: false, message: "User already exists" });
     }
 
     // validating email format and password
