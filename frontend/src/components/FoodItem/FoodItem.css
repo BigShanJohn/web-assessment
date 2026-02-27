@@ -69,10 +69,11 @@
     background-color: white;
 }
 
+/* prevents resizing jump */
 .food-item-counter p {
-  margin: 0;
-  min-width: 30px; /* prevents resizing jump */
-  text-align: center;
+    margin: 0;
+    min-width: 30px;
+    text-align: center;
 }
 
 .food-item-counter img{
