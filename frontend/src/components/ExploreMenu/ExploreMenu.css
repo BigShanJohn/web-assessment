@@ -36,6 +36,29 @@
     transition: 0.2s;
 }
 
+/* Wrapper for image to keep it perfectly circular */
+.menu-img-wrapper {
+    width: 7.5vw;
+    min-width: 80px;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: auto;
+}
+
+/* Image styling inside wrapper */
+.menu-img-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+/* Zoom-in on hover */
+.menu-img-wrapper:hover img {
+    transform: scale(1.15);
+}
+
 .explore-menu-list-item p{
     margin-top: 10px;
     color: #747474;
